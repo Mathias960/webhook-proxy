@@ -21,6 +21,7 @@ export default async function handler(req, res) {
     // Vérifier que les paramètres essentiels sont présents
     if (!webhookId || !webhookToken) {
       return res.status(400).json({ 
+        success: false,
         error: 'webhook_id et webhook_token sont requis' 
       });
     }
@@ -45,6 +46,7 @@ export default async function handler(req, res) {
       payload = { content: decodeURIComponent(content) };
     } else {
       return res.status(400).json({ 
+        success: false,
         error: 'data ou content est requis' 
       });
     }
@@ -75,11 +77,10 @@ export default async function handler(req, res) {
     }
 
   } catch (error) {
-    console.error('Erreur proxy:', error);
+    console.error('Erreur proxy:', error');
     return res.status(500).json({ 
       success: false, 
       error: error.message 
     });
   }
 }
-
